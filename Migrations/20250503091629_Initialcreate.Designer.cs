@@ -12,15 +12,15 @@ using ResumeBuilderBackend.Data;
 namespace ResumeBuilderBackend.Migrations
 {
     [DbContext(typeof(RegistrationDBcontext))]
-    [Migration("20250414101917_initialcreation")]
-    partial class initialcreation
+    [Migration("20250503091629_Initialcreate")]
+    partial class Initialcreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);

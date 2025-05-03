@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('serviceConnectorResourceGroupName')]/providers/Microsoft.Web/sites/resumebuilderapi/providers/Microsoft.ServiceLinker/linkers/ConnectionStringsRegistrationdbConnectio_F7275D2464",
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/resumebuilderbackenddbserver/databases/ResumeBuilderBackend_db",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:RegistrationdbConnection",
+      "dynamicId": null
+    }
+  }
+}
