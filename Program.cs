@@ -22,6 +22,7 @@ builder.Logging.AddConfiguration(builder.Configuration.GetSection("Logging"));
 // Detailed logging for specific namespaces
 builder.Logging.AddFilter("Microsoft", LogLevel.Warning);
 builder.Logging.AddFilter("System", LogLevel.Warning);
+builder.Logging.AddFilter("ResumeBuilderBackend", LogLevel.Debug); // Added for debugging
 builder.Logging.AddFilter("Loginform", LogLevel.Debug);
 
 // Swagger Configuration with more security options
@@ -97,8 +98,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuer = false,
-            ValidateAudience = false,
+            ValidateIssuer = false, // TODO: Set to true and configure ValidIssuer for production
+            ValidateAudience = false, // TODO: Set to true and configure ValidAudience for production
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             ClockSkew = TimeSpan.FromMinutes(5),
@@ -106,17 +107,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+// CORS Configuration
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
-                      policy =>
-                      {
-                          policy.WithOrigins("https://ambitious-smoke-0be5abf00.6.azurestaticapps.net")
-                                .AllowAnyHeader()
-                                .AllowAnyMethod();
-                      });
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("https://ambitious-smoke-0be5abf00.6.azurestaticapps.net")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials(); // Added to support credentials if needed
+    });
 });
 
 // Build the application
@@ -152,13 +152,14 @@ catch (Exception ex)
     app.Logger.LogError(ex, "An error occurred while migrating the database.");
 }
 
-// Middleware Configuration (corrected order)
+// Middleware Configuration
 app.UseHttpsRedirection();
+app.UseCors("AllowFrontend"); // Apply CORS policy
 app.UseRouting();
-app.UseCors(MyAllowSpecificOrigins); // Apply the corrected CORS policy
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
+
+
 
 app.Run();
