@@ -106,20 +106,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// CORS Configuration with corrected policy
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy("AllowSpecificOrigins", builder =>
-//    {
-//        builder.WithOrigins(
-//                "http://localhost:3000",  // React frontend origin
-//                "https://localhost:7777",
-//                "https://qresumebuilder.com")
-//               .AllowAnyMethod()
-//               .AllowAnyHeader()
-//               .AllowCredentials();
-//    });
-//});
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
@@ -169,7 +155,7 @@ catch (Exception ex)
 // Middleware Configuration (corrected order)
 app.UseHttpsRedirection();
 app.UseRouting();
-app.UseCors("MyAllowSpecificOrigins"); // Apply the corrected CORS policy
+app.UseCors(MyAllowSpecificOrigins); // Apply the corrected CORS policy
 app.UseAuthentication();
 app.UseAuthorization();
 
