@@ -126,18 +126,18 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Q-Resume Builder API v1");
-        c.DisplayRequestDuration();
-    });
 }
 else
 {
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Q-Resume Builder API v1");
+    c.DisplayRequestDuration();
+});
 
 // Database Migration
 try
